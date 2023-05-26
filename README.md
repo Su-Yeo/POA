@@ -49,11 +49,11 @@ Sessacthon, A service for connecting people with disabilities and non-disabled i
   * 펀딩
   * 채팅
   
-  ### 2.고도화
-    * 신고하기
-    * 푸시 메시지
-    * 작품 구매
-    * 펀딩에 따른 적립금 지급
+ ### 2.고도화
+   * 신고하기
+   * 푸시 메시지
+   * 작품 구매
+   * 펀딩에 따른 적립금 지급
 
 
 
