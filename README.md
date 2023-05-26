@@ -50,7 +50,6 @@ Sessacthon, A service for connecting people with disabilities and non-disabled i
   * 채팅
   
   ### 2.고도화
-
     * 신고하기
     * 푸시 메시지
     * 작품 구매
@@ -58,5 +57,5 @@ Sessacthon, A service for connecting people with disabilities and non-disabled i
 
 
 
-7. 향후계획
+## 7. 향후계획
 ---
