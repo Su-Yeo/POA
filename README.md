@@ -47,9 +47,10 @@ Sessacthon, A service for connecting people with disabilities and non-disabled i
   * 카테고리 검색 기능
   * 구독, 찜 메뉴
   * 펀딩
-  * 채팅
+
   
  ### 2.고도화
+   * 채팅
    * 신고하기
    * 푸시 메시지
    * 작품 구매
