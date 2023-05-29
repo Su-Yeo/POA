@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/poa.iml" filepath="$PROJECT_DIR$/.idea/poa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/POA.iml" filepath="$PROJECT_DIR$/.idea/POA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.iml" filepath="$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.sesacthon.poa.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/poa.poa.iml" filepath="$PROJECT_DIR$/.idea/modules/poa.poa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/poa.poa.main.iml" filepath="$PROJECT_DIR$/.idea/modules/poa.poa.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/poa.poa.test.iml" filepath="$PROJECT_DIR$/.idea/modules/poa.poa.test.iml" />
     </modules>
   </component>
 </project>
