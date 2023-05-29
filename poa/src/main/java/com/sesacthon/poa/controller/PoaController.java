@@ -17,7 +17,7 @@ public class PoaController {
 
     @ResponseBody
     @GetMapping("/test")
-    public Object selectData(){
+    public String selectData(){
         return "test";
     }
 }
