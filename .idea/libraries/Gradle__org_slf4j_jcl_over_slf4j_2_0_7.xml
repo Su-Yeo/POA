@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Gradle: org.slf4j:jcl-over-slf4j:2.0.7">
+  <library name="Gradle: org.slf4j:jcl-over-slf4j:2.0.7" external-system-id="GRADLE">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/2.0.7/f127fe5ee53404a8b3697cdd032dd1dd6a29dd77/jcl-over-slf4j-2.0.7.jar!/" />
     </CLASSES>
