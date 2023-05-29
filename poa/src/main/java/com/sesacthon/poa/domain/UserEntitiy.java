@@ -1,10 +1,7 @@
 package com.sesacthon.poa.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -15,10 +12,9 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
 @Table(name = "User")
-public class UserEntitiy {
+public class UserEntitiy extends BaseTimeEntity {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -46,12 +42,16 @@ public class UserEntitiy {
 
     private Integer creator_id;
 
-    @Column(updatable = false)
-    @CreatedDate
-    private LocalDateTime create_time;
-
-    @LastModifiedDate
-    private LocalDateTime update_time;
-
-    private LocalDateTime delete_time;
+    @Builder
+    public UserEntitiy(Integer user_id, String email, String pw, String name, String phone, String nick, String profile, String address, Integer creator_id) {
+        this.user_id = user_id;
+        this.email = email;
+        this.pw = pw;
+        this.name = name;
+        this.phone = phone;
+        this.nick = nick;
+        this.profile = profile;
+        this.address = address;
+        this.creator_id = creator_id;
+    }
 }

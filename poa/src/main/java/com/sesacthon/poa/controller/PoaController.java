@@ -1,5 +1,6 @@
 package com.sesacthon.poa.controller;
 
+import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.service.PoaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class PoaController {
 
     @ResponseBody
     @GetMapping("/user")
-    public String selectUser(){
-        return "test";
+    public UserDto findUser(){
+        return poaService.findUser(1);
     }
 }
