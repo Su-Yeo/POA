@@ -16,8 +16,8 @@ public class PoaController {
     private final PoaService poaService;
 
     @ResponseBody
-    @GetMapping("/test")
-    public String selectData(){
+    @GetMapping("/user")
+    public String selectUser(){
         return "test";
     }
 }
