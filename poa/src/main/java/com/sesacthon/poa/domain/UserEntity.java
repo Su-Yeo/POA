@@ -3,18 +3,12 @@ package com.sesacthon.poa.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
-
 @Getter
 @ToString
 @Entity
 @NoArgsConstructor
 @Table(name = "User")
-public class UserEntitiy extends BaseTimeEntity {
+public class UserEntity extends BaseTimeEntity { // 유저 테이블
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -43,7 +37,7 @@ public class UserEntitiy extends BaseTimeEntity {
     private Integer creator_id;
 
     @Builder
-    public UserEntitiy(Integer user_id, String email, String pw, String name, String phone, String nick, String profile, String address, Integer creator_id) {
+    public UserEntity(Integer user_id, String email, String pw, String name, String phone, String nick, String profile, String address, Integer creator_id) {
         this.user_id = user_id;
         this.email = email;
         this.pw = pw;
