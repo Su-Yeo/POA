@@ -7,7 +7,9 @@ build/
 
 #kh mariadb포트다름
 application.yml
-/src/main/resourecs/application.yml
+#/src/main/resourecs/application.yml
+src/main/resources/application.yml
+
 
 ### STS ###
 .apt_generated
