@@ -2,11 +2,11 @@
 <module version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <output-test url="file://$MODULE_DIR$/../../poa/out/test/classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/../../poa/src/test">
       <sourceFolder url="file://$MODULE_DIR$/../../poa/src/test/java" isTestSource="true" />
     </content>
+    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestModuleProperties" production-module="poa.main" />

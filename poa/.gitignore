@@ -5,6 +5,10 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+#kh mariadb포트다름
+application.yml
+/src/main/resourecs/application.yml
+
 ### STS ###
 .apt_generated
 .classpath
