@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class WishListDto { // 좋아요 Dto
+public class WishlistDto { // 좋아요 Dto
 
     private Integer wishlist_id;
 
