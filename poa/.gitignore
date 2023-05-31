@@ -67,3 +67,5 @@ out/
 .gradle
 **/build/
 !src/**/build/
+
+generated/
