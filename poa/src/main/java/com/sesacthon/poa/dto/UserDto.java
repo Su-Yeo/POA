@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDto {
 
-    private Integer user_id;
+    private Integer user_id; // 작가 id
 
     private String email;
 
@@ -23,5 +23,5 @@ public class UserDto {
 
     private String address;
 
-    private Integer creator_id;
+    private Integer creator_id; // null: 일반 / creator_id: 작가
 }

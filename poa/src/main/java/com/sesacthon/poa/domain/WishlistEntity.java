@@ -21,9 +21,6 @@ public class WishlistEntity extends BaseTimeEntity { // 좋아요 테이블
     @Column(nullable = false)
     private Integer artwork_id;
 
-//    @Column(nullable = false)
-//    private Integer creator_id;
-
     @Builder
     public WishlistEntity(Integer wishlist_id, Integer user_id, Integer artwork_id) {
         this.wishlist_id = wishlist_id;

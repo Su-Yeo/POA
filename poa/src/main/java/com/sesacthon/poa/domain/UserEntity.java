@@ -34,7 +34,7 @@ public class UserEntity extends BaseTimeEntity { // 유저 테이블
 
     private String address;
 
-    private Integer creator_id;
+    private Integer creator_id; // null: 일반 / creator_id: 작가
 
     @Builder
     public UserEntity(Integer user_id, String email, String pw, String name, String phone, String nick, String profile, String address, Integer creator_id) {

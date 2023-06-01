@@ -23,7 +23,6 @@ public class DisabledEntity { // 장애 정보 테이블
     @Column(nullable = false)
     private String disabled_text;
 
-
     @Builder
     public DisabledEntity(Integer disabled_id, String disabled_type, String disabled_text) {
         this.disabled_id = disabled_id;

@@ -1,6 +1,7 @@
 package com.sesacthon.poa.dto;
 
 
+import jakarta.persistence.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,11 @@ public class ArtworkDto { // 작품 Dto
 
     private String content;
 
+    private Integer artwork_price;
+
+    private String artwork_size;
+
+    private Integer artwork_state; // 0:판매완료 / 1:판매중
+
+    private int visible; // true: 공개허용 / false: 비허용
 }
