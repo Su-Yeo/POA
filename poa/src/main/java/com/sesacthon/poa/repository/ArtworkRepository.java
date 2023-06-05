@@ -2,6 +2,10 @@ package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer> {
 
@@ -20,5 +24,10 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
 
      */
 
-    
+    @Query(value = "SELECT a.* " +
+            "FROM artwork a " +
+            "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
+            "WHERE w.user_id = :user_id",
+            nativeQuery = true)
+    List<ArtworkEntity> getArtworkByUserId(@Param("user_id") Integer user_id);
 }

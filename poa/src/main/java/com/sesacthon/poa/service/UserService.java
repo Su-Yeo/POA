@@ -4,10 +4,8 @@ import com.sesacthon.poa.domain.UserEntity;
 import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.dto.mapper.UserMapper;
 import com.sesacthon.poa.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -19,11 +17,6 @@ public class UserService {
     private final UserRepository userRepository; // JPA
 
     private final UserMapper userMapper; // DTO로 변환
-
-//    public UserService(UserRepository userRepository, UserMapper userMapper) {
-//        this.userRepository = userRepository;
-//        this.userMapper = userMapper;
-//    }
 
 
     /**

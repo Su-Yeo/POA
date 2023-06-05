@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 //@RequiredArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
 @Slf4j
@@ -28,12 +29,6 @@ public class PoaController {
     private final DisabledService disabledService; // 장애인
     private final FileService fileService; // 파일
 
-    public PoaController(UserService userService, CreatorService creatorService, DisabledService disabledService, FileService fileService) {
-        this.userService = userService;
-        this.creatorService = creatorService;
-        this.disabledService = disabledService;
-        this.fileService = fileService;
-    }
     /**
      * user_id로 유저 조회
      * @param user_id
