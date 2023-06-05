@@ -15,6 +15,10 @@ public class DisabledService {
     private final DisabledRepository disabledRepository; // JPA
     private final DisabledMapper disabledMapper; // DTO로 변환
 
+    public DisabledService(DisabledRepository disabledRepository, DisabledMapper disabledMapper) {
+        this.disabledRepository = disabledRepository;
+        this.disabledMapper = disabledMapper;
+    }
     /**
      * 장애 정보 저장
      * @param disabledDto

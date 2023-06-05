@@ -28,4 +28,6 @@ public class ArtworkDto { // 작품 Dto
     private Integer artwork_state; // 0:판매완료 / 1:판매중
 
     private int visible; // true: 공개허용 / false: 비허용
+
+    private Integer like_cnt; // 좋아요 갯수
 }

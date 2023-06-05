@@ -15,6 +15,11 @@ public class UserService {
     private final UserRepository userRepository; // JPA
     private final UserMapper userMapper; // DTO로 변환
 
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
+
     /**
      * user_id로 유저 조회
      * @param user_id

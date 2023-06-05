@@ -15,6 +15,10 @@ public class CreatorService {
     private final CreatorRepository creatorRepository; // JPA
     private final CreatorMapper creatorMapper; // DTO로 변환
 
+    public CreatorService(CreatorRepository creatorRepository, CreatorMapper creatorMapper) {
+        this.creatorRepository = creatorRepository;
+        this.creatorMapper = creatorMapper;
+    }
     /**
      * 작가 정보 저장
      * @param creatorDto
