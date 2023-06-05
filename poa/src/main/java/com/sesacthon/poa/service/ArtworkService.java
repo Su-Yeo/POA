@@ -19,11 +19,11 @@ public class ArtworkService {
     private final ArtworkMapper artworkMapper; // DTO로 변환
     private final WishlistRepository wishlistRepository;
 
-    public ArtworkService(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, WishlistRepository wishlistRepository) {
-        this.artworkRepository = artworkRepository;
-        this.artworkMapper = artworkMapper;
-        this.wishlistRepository = wishlistRepository;
-    }
+//    public ArtworkService(ArtworkRepository artworkRepository, ArtworkMapper artworkMapper, WishlistRepository wishlistRepository) {
+//        this.artworkRepository = artworkRepository;
+//        this.artworkMapper = artworkMapper;
+//        this.wishlistRepository = wishlistRepository;
+//    }
     /**
      * user_id로 유저 조회
 //     * @param user_id

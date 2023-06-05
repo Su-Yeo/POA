@@ -15,10 +15,10 @@ public class FileService {
     private final FileRepository fileRepository; // JPA
     private final FileMapper fileMapper; // DTO로 변환
 
-    public FileService(FileRepository fileRepository, FileMapper fileMapper) {
-        this.fileRepository = fileRepository;
-        this.fileMapper = fileMapper;
-    }
+//    public FileService(FileRepository fileRepository, FileMapper fileMapper) {
+//        this.fileRepository = fileRepository;
+//        this.fileMapper = fileMapper;
+//    }
     /**
      * 파일 저장
      * @param fileDto

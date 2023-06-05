@@ -20,11 +20,11 @@ public class WishlistService {
     private final WishlistMapper wishlistMapper; // DTO로 변환
     private final ArtworkMapper artworkMapper; // DTO로 변환
 
-    public WishlistService(WishlistRepository wishlistRepository,  WishlistMapper wishlistMapper, ArtworkMapper artworkMapper) {
-        this.wishlistRepository = wishlistRepository;
-        this.wishlistMapper = wishlistMapper;
-        this.artworkMapper = artworkMapper;
-    }
+//    public WishlistService(WishlistRepository wishlistRepository,  WishlistMapper wishlistMapper, ArtworkMapper artworkMapper) {
+//        this.wishlistRepository = wishlistRepository;
+//        this.wishlistMapper = wishlistMapper;
+//        this.artworkMapper = artworkMapper;
+//    }
 
     /**
      * user_id로 유저 조회
