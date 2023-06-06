@@ -1,7 +1,9 @@
 package com.sesacthon.poa.service;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
+import com.sesacthon.poa.domain.UserEntity;
 import com.sesacthon.poa.dto.ArtworkDto;
+import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.dto.mapper.ArtworkMapper;
 import com.sesacthon.poa.repository.ArtworkRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,15 @@ public class ArtworkService {
     private final ArtworkMapper artworkMapper; // DTO로 변환
 
     /**
+     * 1개의 아트의 정보 저장
+     * @param ArtworkDto
+     * @return ArtworkDto
+     */
+    public ArtworkDto saveArtwork(ArtworkDto artworkDto){
+        ArtworkEntity artworkEntity = artworkRepository.save(artworkMapper.toEntity(artworkDto));
+        return artworkMapper.toDto(artworkEntity);
+    }
+    /**
      * 1개의 아트의 정보 전달
      * @param artwork_id
      * @return ArtworkDto
@@ -30,10 +41,10 @@ public class ArtworkService {
      * 최신의 아트의 정보리스트 전달
      * @return List<ArtworkDto>
      */
-//    public List<ArtworkDto> getArtworkOrderByCreateTimeDesc(){
-//        List<ArtworkEntity> lastestArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC))
-//        return artworkMapper.toDtoList()
-//    }
+    public List<ArtworkDto> findAllDesc(){
+        List<ArtworkEntity> lastArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+        return artworkMapper.toDtoList(lastArtworks);
+    }
 
 
     /**

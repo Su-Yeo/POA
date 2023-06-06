@@ -38,7 +38,7 @@ public class ArtworkEntity extends BaseTimeEntity { // 작품 테이블
     private Integer artwork_state; // 0:판매완료 / 1:판매중
 
     @Column(columnDefinition = "TINYINT", length=1)
-    private int visible; // true: 공개허용 / false: 비허용
+    private int visible; // true,1: 공개허용 / false,0: 비허용
 
     @Builder
     public ArtworkEntity(Integer artwork_id, Integer user_id, Integer category_id, Integer file_id, String title, String content, Integer artwork_price, String artwork_size, Integer artwork_state, int visible) {

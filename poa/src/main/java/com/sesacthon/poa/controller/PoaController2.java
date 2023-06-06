@@ -1,6 +1,7 @@
 package com.sesacthon.poa.controller;
 
 import com.sesacthon.poa.dto.ArtworkDto;
+import com.sesacthon.poa.dto.FileDto;
 import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.dto.WishlistDto;
 import com.sesacthon.poa.service.WishlistService;
@@ -13,7 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,7 +27,21 @@ import java.util.List;
 public class PoaController2 {
     private final ArtworkService artworkService; //
     private final WishlistService wishlistService; //
-
+    private final FileService fileService; // 파일
+    /**
+     * 1개의 아트 정보 저장
+     * @param artworkDto
+     * @return ArtworkDto
+     */
+    @ResponseBody
+    @PostMapping(value = "/saveArtwork", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ArtworkDto saveArtwork(@RequestPart ArtworkDto artworkDto, @RequestPart MultipartFile imgFile){
+        FileDto fileDto = fileService.saveFile(imgFile);
+        artworkDto.setFile_id(fileDto.getFile_id());
+        artworkDto = artworkService.saveArtwork(artworkDto);
+        artworkDto.setFile_url(fileDto.getFile_url());
+        return artworkDto;
+    }
     /**
      * 1개의 아트의 정보 전달
      * @param artwork_id
@@ -39,19 +56,22 @@ public class PoaController2 {
     @ResponseBody
     @GetMapping("/artwork/{artwork_id}")
     public ArtworkDto findArtwork(@PathVariable Integer artwork_id) {
+
         return artworkService.findArtwork(artwork_id);
     }
 
 //    artwork 리스트 정보 전달
-//    /**
-//     * 여러개의 아트의 정보 전달(추후 최신)
-//     * @List<ArtworkDto>
-//     */
-//    @ResponseBody
-//    @GetMapping("/artwork/lastest")
-//
-//    public List<ArtworkDto> getArtworkOrderByCreateTimeDesc()
-//
+    /**
+     * 여러개의 아트의 정보 전달(추후 최신)
+     * @List<ArtworkDto>
+     */
+    @ResponseBody
+    @GetMapping("/artwork/last")
+
+    public List<ArtworkDto> findAllDesc(){
+        return artworkService.findAllDesc();
+    }
+
 
 //    좋아요 등록
     @ResponseBody
@@ -66,6 +86,12 @@ public class PoaController2 {
      * @param user_id
      * @return List<ArtworkDto>
      */
+    @Tag(name = "ArtworkWishlistList", description = "작품리스트")
+    @Operation(summary = "좋아요 작품 리스트 조회", description = "작품 여러개의 정보."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
     @ResponseBody
     @GetMapping("/artwork/wishlist/{user_id}")
     public List<ArtworkDto> getArtworkByUserId(@PathVariable Integer user_id) {

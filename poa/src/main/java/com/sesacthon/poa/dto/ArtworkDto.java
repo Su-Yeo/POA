@@ -17,6 +17,8 @@ public class ArtworkDto { // 작품 Dto
 
     private Integer file_id;
 
+    private String file_url;
+
     private String title;
 
     private String content;
