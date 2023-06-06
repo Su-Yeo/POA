@@ -30,4 +30,7 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "WHERE w.user_id = :user_id",
             nativeQuery = true)
     List<ArtworkEntity> getArtworkByUserId(@Param("user_id") Integer user_id);
+
+
+
 }

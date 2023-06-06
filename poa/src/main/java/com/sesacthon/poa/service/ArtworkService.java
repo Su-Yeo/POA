@@ -6,6 +6,7 @@ import com.sesacthon.poa.dto.mapper.ArtworkMapper;
 import com.sesacthon.poa.repository.ArtworkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,15 @@ public class ArtworkService {
     public ArtworkDto findArtwork(Integer artwork_id){
         return artworkMapper.toDto(artworkRepository.findById(artwork_id).orElse(null));
     }
+    /**
+     * 최신의 아트의 정보리스트 전달
+     * @return List<ArtworkDto>
+     */
+//    public List<ArtworkDto> getArtworkOrderByCreateTimeDesc(){
+//        List<ArtworkEntity> lastestArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC))
+//        return artworkMapper.toDtoList()
+//    }
+
 
     /**
      * 1명의 유저가 좋아요한 리스트
