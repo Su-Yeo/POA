@@ -3,7 +3,6 @@ package com.sesacthon.poa.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -35,14 +34,18 @@ public class UserDto {
     @NotBlank(message = "닉네임 필수 입력 입니다.")
     private String nick;
 
-    @Schema(description = "프로필", example = "파일 id")
-    @NotNull(message = "프로필 필수 입력 입니다.")
-    private String profile;
+    @Schema(description = "프로필", example = "파일 url", nullable = true)
+    @JsonIgnoreProperties(ignoreUnknown = true) // 값 무시
+    private String profile_url;
+
+    @Schema(hidden = true)
+    private Integer profile;
 
     @Schema(description = "주소", example = "1234")
     @NotBlank(message = "주소 필수 입력 입니다.")
     private String address;
 
     @Schema(description = "작가정보 id", nullable = true, example = "null")
+    @JsonIgnoreProperties(ignoreUnknown = true) // 값 무시
     private Integer creator_id; // null: 일반 / creator_id: 작가
 }

@@ -19,14 +19,12 @@ public class FileDto { // 저장된 파일정보 Dto
     @NotBlank(message = "파일명 필수 입력 입니다.")
     private String file_name;
 
-    @Schema(description = "파일URL")
-    @NotBlank(message = "파일URL 필수 입력 입니다.")
+    @Schema(description = "파일 URL")
+    @JsonIgnoreProperties(ignoreUnknown = true) // 값 무시
     private String file_url;
 
     @Schema(description = "파일경로")
-    @NotBlank(message = "파일경로 필수 입력 입니다.")
+    @JsonIgnoreProperties(ignoreUnknown = true) // 값 무시
     private String file_path;
-
-
 
 }

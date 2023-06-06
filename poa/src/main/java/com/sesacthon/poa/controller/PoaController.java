@@ -16,8 +16,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -43,9 +46,18 @@ public class PoaController {
     @ResponseBody
     @GetMapping("/findUser/{user_id}")
     public UserDto findUser(@PathVariable Integer user_id){
-        return userService.findUser(user_id);
+        UserDto userDto = userService.findUser(user_id);
+        FileDto fileDto = fileService.findFile(userDto.getProfile());
+        if(fileDto!=null)
+            userDto.setProfile_url(fileDto.getFile_url());
+        return userDto;
     }
 
+    /**
+     * 유저 저장
+     * @param userDto
+     * @return UserDto
+     */
     @Tag(name = "User", description = "유저")
     @Operation(summary = "유저 저장", description = "일반회원으로만 저장됨."
     )
@@ -53,11 +65,20 @@ public class PoaController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserDto.class), mediaType = "application/json"))
     })
     @ResponseBody
-    @PostMapping("/saveUser")
-    public UserDto saveUser(@RequestBody UserDto userDto){
-        return userService.saveUser(userDto);
+    @PostMapping(value = "/saveUser", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public UserDto saveUser(@RequestPart UserDto userDto, @RequestPart MultipartFile imgFile){
+        FileDto fileDto = fileService.saveFile(imgFile);
+        userDto.setProfile(fileDto.getFile_id());
+        userDto = userService.saveUser(userDto);
+        userDto.setProfile_url(fileDto.getFile_url());
+        return userDto;
     }
 
+    /**
+     *
+     * @param creatorDto
+     * @return
+     */
     @Tag(name = "Creator", description = "작가 정보")
     @Operation(summary = "작가 정보 저장", description = "장애 정보 코드가 필요함."
     )
@@ -70,8 +91,13 @@ public class PoaController {
         return creatorService.saveCreator(creatorDto);
     }
 
+    /**
+     * 장애 정보 저장
+     * @param disabledDto
+     * @return
+     */
     @Tag(name = "Disabled", description = "장애 정보")
-    @Operation(summary = "장애 정보 저장", description = ""
+    @Operation(summary = "장애 정보 저장", description = "장애 정보 저장 후 작가 정보 업데이트."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = DisabledDto.class), mediaType = "application/json"))
@@ -86,11 +112,11 @@ public class PoaController {
     @Operation(summary = "파일 저장", description = "file_url은 JSON이 저장됨."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserDto.class), mediaType = "application/json"))
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = FileDto.class), mediaType = "application/json"))
     })
     @ResponseBody
-    @PostMapping("/saveFile")
-    public FileDto saveFile(@RequestBody FileDto fileDto){
-        return fileService.saveFile(fileDto);
+    @PostMapping(value = "/saveFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public FileDto saveFile(@RequestPart List<MultipartFile> imgFile){
+        return fileService.saveFiles(imgFile);
     }
 }

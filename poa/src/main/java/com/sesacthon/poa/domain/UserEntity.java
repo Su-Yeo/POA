@@ -30,14 +30,14 @@ public class UserEntity extends BaseTimeEntity { // 유저 테이블
     private String nick;
 
     @Column(nullable = false)
-    private String profile;
+    private Integer profile;
 
     private String address;
 
     private Integer creator_id; // null: 일반 / creator_id: 작가
 
     @Builder
-    public UserEntity(Integer user_id, String email, String pw, String name, String phone, String nick, String profile, String address, Integer creator_id) {
+    public UserEntity(Integer user_id, String email, String pw, String name, String phone, String nick, Integer profile, String address, Integer creator_id) {
         this.user_id = user_id;
         this.email = email;
         this.pw = pw;
