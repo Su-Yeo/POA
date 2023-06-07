@@ -10,7 +10,7 @@ public class BuyInfoDto { // 구매정보 Dto
 
     private Integer BuyInfo_id;
 
-    private Integer market_id;
+    private Integer artwork_id;
 
     private Integer user_id;
 

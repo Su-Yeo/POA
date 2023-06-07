@@ -22,7 +22,7 @@ public class ArtworkService {
 
     /**
      * 1개의 아트의 정보 저장
-     * @param ArtworkDto
+     * @param artworkDto
      * @return ArtworkDto
      */
     public ArtworkDto saveArtwork(ArtworkDto artworkDto){
@@ -56,5 +56,15 @@ public class ArtworkService {
         List<ArtworkEntity> likedArtworks = artworkRepository.getArtworkByUserId(user_id);
         return artworkMapper.toDtoList(likedArtworks);
     }
+
+    /**
+     * 좋아요 많은 아트의 정보리스트 전달
+     * @return List<ArtworkDto>
+     */
+    public List<ArtworkDto> findAllOrderByWishlist(){
+        List<ArtworkEntity> manyArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+        return artworkMapper.toDtoList(manyArtworks);
+    }
+
 
 }

@@ -1,9 +1,6 @@
 package com.sesacthon.poa.controller;
 
-import com.sesacthon.poa.dto.ArtworkDto;
-import com.sesacthon.poa.dto.FileDto;
-import com.sesacthon.poa.dto.UserDto;
-import com.sesacthon.poa.dto.WishlistDto;
+import com.sesacthon.poa.dto.*;
 import com.sesacthon.poa.service.WishlistService;
 import com.sesacthon.poa.service.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,11 +25,19 @@ public class PoaController2 {
     private final ArtworkService artworkService; //
     private final WishlistService wishlistService; //
     private final FileService fileService; // 파일
+    private final BuyInfoService buyInfoService; // 파일
+
     /**
      * 1개의 아트 정보 저장
      * @param artworkDto
      * @return ArtworkDto
      */
+    @Tag(name = "addArtwork", description = "작품 등록")
+    @Operation(summary = "작품 저장", description = "작품 저장."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
     @ResponseBody
     @PostMapping(value = "/saveArtwork", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ArtworkDto saveArtwork(@RequestPart ArtworkDto artworkDto, @RequestPart MultipartFile imgFile){
@@ -62,9 +67,17 @@ public class PoaController2 {
 
 //    artwork 리스트 정보 전달
     /**
-     * 여러개의 아트의 정보 전달(추후 최신)
+     * 여러개의 아트의 정보 최신순 전달
      * @List<ArtworkDto>
      */
+    @Tag(name = "LastArtworkList", description = "최신작품리스트")
+    @Operation(summary = "최신 작품 리스트 조회", description = "최신 작품 여러개의 정보."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = ArtworkDto.class),
+                            mediaType = "application/json"))
+    })
     @ResponseBody
     @GetMapping("/artwork/last")
 
@@ -74,6 +87,17 @@ public class PoaController2 {
 
 
 //    좋아요 등록
+    /**
+     * 좋아요(Wishlist) 저장
+     * @param wishlistDto
+     * @return WishlistDto
+     */
+    @Tag(name = "addWishlist", description = "좋아요 등록")
+    @Operation(summary = "좋아요 저장", description = "좋아요 저장."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = WishlistDto.class), mediaType = "application/json"))
+    })
     @ResponseBody
     @PostMapping("saveWishlist")
     public WishlistDto saveWishlist(@RequestBody WishlistDto wishlistDto)
@@ -101,9 +125,34 @@ public class PoaController2 {
 //1개의 작품에 좋아요한 갯수
 
 //좋아요 많은 순서대로 필터링한 리스트
+//@ResponseBody
+//@GetMapping("/artwork/manyWish")
+//
+//public List<ArtworkDto> findAllCntWishlist(){
+//    return artworkService.findAllOrderByWishlist();
+//}
+
 
 
 //    BuyInfo controller
+//    구매정보 등록
+    /**
+     * 구매 정보 저장
+     * @param buyInfoDto
+     * @return BuyInfoDto
+     */
+    @Tag(name = "buyInfoDto", description = "구매 정보")
+    @Operation(summary = "구매 정보 저장", description = "구매 정보 저장 후 유저 및 작가 정보 업데이트."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BuyInfoDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @PostMapping("/saveBuyInfo")
+    public BuyInfoDto saveBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
+        return buyInfoService.saveBuyInfo(buyInfoDto);
+    }
+
 //1명이 산 구매 리스트 전달
 //@ResponseBody
 //@GetMapping("/buyinfo")
