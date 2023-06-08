@@ -16,6 +16,7 @@ public class BuyInfoEntity extends BaseTimeEntity { // 구매정보 테이블
     @Column(nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer buyInfo_id;
+
     @Column(nullable = false)
     private Integer artwork_id;
 
@@ -31,13 +32,16 @@ public class BuyInfoEntity extends BaseTimeEntity { // 구매정보 테이블
     @Column(nullable = false)
     private String pay_date;
 
+    private int visible;// true,1: 공개허용 / false,0: 비허용
+
     @Builder
-    public BuyInfoEntity(Integer buyInfo_id, Integer artwork_id, Integer user_id, String buy_address, Integer pay_price, String pay_date) {
+    public BuyInfoEntity(Integer buyInfo_id, Integer artwork_id, Integer user_id, String buy_address, Integer pay_price, String pay_date, int visible) {
         this.buyInfo_id = buyInfo_id;
         this.artwork_id = artwork_id;
         this.user_id = user_id;
         this.buy_address = buy_address;
         this.pay_price = pay_price;
         this.pay_date = pay_date;
+        this.visible = visible;
     }
 }

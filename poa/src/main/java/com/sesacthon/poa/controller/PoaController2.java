@@ -142,7 +142,7 @@ public class PoaController2 {
      * @return BuyInfoDto
      */
     @Tag(name = "buyInfoDto", description = "구매 정보")
-    @Operation(summary = "구매 정보 저장", description = "구매 정보 저장 후 유저 및 작가 정보 업데이트."
+    @Operation(summary = "구매 정보 저장", description = "구매 정보 저장 후 유저 및 작가 정보, 작품 state 업데이트."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BuyInfoDto.class), mediaType = "application/json"))

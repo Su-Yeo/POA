@@ -17,12 +17,12 @@ public class BuyInfoService {
 
 
     /**
-     * 작가 정보 저장
+     * 구매 정보 저장
      * @param buyInfoDto
      * @return BuyInfoDto
      */
     public BuyInfoDto saveBuyInfo(BuyInfoDto buyInfoDto) {
-        BuyInfoEntity buyInfoEntity = buyInfoMapper.toEntity(buyInfoDto);
-        return buyInfoMapper.toDto(buyInfoRepository.save(buyInfoEntity));
+        BuyInfoEntity buyInfoEntity = buyInfoRepository.save(buyInfoMapper.toEntity(buyInfoDto));
+        return buyInfoMapper.toDto(buyInfoEntity);
     }
 }

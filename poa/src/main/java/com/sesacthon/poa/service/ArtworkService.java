@@ -42,7 +42,9 @@ public class ArtworkService {
      * @return List<ArtworkDto>
      */
     public List<ArtworkDto> findAllDesc(){
-        List<ArtworkEntity> lastArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+//        List<ArtworkEntity> lastArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+//        List<ArtworkEntity> lastArtworks = artworkRepository.findAll();
+        List<ArtworkEntity> lastArtworks = artworkRepository.findAllByOrderByArtworkIdDesc();
         return artworkMapper.toDtoList(lastArtworks);
     }
 
@@ -57,14 +59,14 @@ public class ArtworkService {
         return artworkMapper.toDtoList(likedArtworks);
     }
 
-    /**
-     * 좋아요 많은 아트의 정보리스트 전달
-     * @return List<ArtworkDto>
-     */
-    public List<ArtworkDto> findAllOrderByWishlist(){
-        List<ArtworkEntity> manyArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
-        return artworkMapper.toDtoList(manyArtworks);
-    }
+//    /**
+//     * 좋아요 많은 아트의 정보리스트 전달
+//     * @return List<ArtworkDto>
+//     */
+//    public List<ArtworkDto> findAllOrderByWishlist(){
+//        List<ArtworkEntity> manyArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+//        return artworkMapper.toDtoList(manyArtworks);
+//    }
 
 
 }
