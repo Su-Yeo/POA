@@ -1,7 +1,6 @@
 package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,5 +37,12 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "ORDER BY a.artwork_id DESC",
             nativeQuery = true)
     List<ArtworkEntity> findAllByOrderByArtworkIdDesc();
+
+
+    @Query(value = "SELECT a.* " +
+            "FROM artwork a " +
+            "WHERE a.user_id = :creator_id AND visible = TRUE ORDER BY artwork_id DESC ",
+            nativeQuery = true)
+    List<ArtworkEntity> findAllByCreatorId(@Param("creator_id") Integer creator_id);
 
 }

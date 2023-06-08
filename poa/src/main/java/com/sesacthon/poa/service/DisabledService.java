@@ -24,4 +24,13 @@ public class DisabledService {
         DisabledEntity disabledEntity = disabledMapper.toEntity(disabledDto);
         return disabledMapper.toDto(disabledRepository.save(disabledEntity));
     }
+
+    /**
+     * 장애 정보 조회
+     * @param disabled_id
+     * @return DisabledDto
+     */
+    public DisabledDto findDisabled(Integer disabled_id) {
+        return disabledMapper.toDto(disabledRepository.findById(disabled_id).orElse(null));
+    }
 }

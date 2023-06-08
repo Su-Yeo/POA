@@ -2,6 +2,10 @@ package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
@@ -30,4 +34,16 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 //            "FROM `user` u JOIN file f  ON u.profile = f.file_id " +
 //            "WHERE u.user_id = :user_id ")
 //    UserDto findByUser(@Param("user_id") Integer user_id);
+
+    /**
+     * 작가 id 업데이트
+     * @param user_id
+     * @param creator_id
+     * @return int
+     */
+    @Transactional(value = "transactionManager")
+    @Modifying
+    @Query(value = "UPDATE `user` SET creator_id = :creator_id WHERE user_id = :user_id", nativeQuery = true)
+    int updateUserCreatorId(@Param("user_id") Integer user_id, @Param("creator_id") Integer creator_id);
+
 }

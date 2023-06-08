@@ -37,4 +37,9 @@ public class UserService {
         UserEntity userEntity = userRepository.save(userMapper.toEntity(userDto));
         return userMapper.toDto(userEntity);
     }
+
+    public boolean updateUserCreatorId(Integer user_id, Integer creator_id){
+        int i = userRepository.updateUserCreatorId(user_id, creator_id);
+        return i==0 ? false : true;
+    }
 }

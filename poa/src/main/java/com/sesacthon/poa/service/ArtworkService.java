@@ -1,14 +1,11 @@
 package com.sesacthon.poa.service;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
-import com.sesacthon.poa.domain.UserEntity;
 import com.sesacthon.poa.dto.ArtworkDto;
-import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.dto.mapper.ArtworkMapper;
 import com.sesacthon.poa.repository.ArtworkRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,4 +66,13 @@ public class ArtworkService {
 //    }
 
 
+    /**
+     * 작가의 작품 리스트
+     * @param creator_id
+     * @return List<ArtworkDto>
+     */
+    public List<ArtworkDto> findAllByCreatorId(Integer creator_id){
+        List<ArtworkEntity> artworkEntityList = artworkRepository.findAllByCreatorId(creator_id);
+        return artworkMapper.toDtoList(artworkEntityList);
+    }
 }

@@ -1,13 +1,8 @@
 package com.sesacthon.poa.controller;
 
-import com.sesacthon.poa.dto.CreatorDto;
-import com.sesacthon.poa.dto.DisabledDto;
-import com.sesacthon.poa.dto.FileDto;
-import com.sesacthon.poa.dto.UserDto;
-import com.sesacthon.poa.service.CreatorService;
-import com.sesacthon.poa.service.DisabledService;
-import com.sesacthon.poa.service.FileService;
-import com.sesacthon.poa.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sesacthon.poa.dto.*;
+import com.sesacthon.poa.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +26,7 @@ public class PoaController {
     private final CreatorService creatorService; // 작가
     private final DisabledService disabledService; // 장애인
     private final FileService fileService; // 파일
+    private final ArtworkService artworkService; // 작품
 
     /**
      * user_id로 유저 조회
@@ -75,20 +71,48 @@ public class PoaController {
     }
 
     /**
-     *
-     * @param creatorDto
-     * @return
+     * 작가 정보 저장
+     * @param reqCreatorDto
+     * @return CreatorDto
      */
     @Tag(name = "Creator", description = "작가 정보")
-    @Operation(summary = "작가 정보 저장", description = "장애 정보 코드가 필요함."
+    @Operation(summary = "작가 정보 저장", description = "유저id와 장애 정보id가 필요함.\n유저id 없을시 null 리턴"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CreatorDto.class), mediaType = "application/json"))
     })
     @ResponseBody
     @PostMapping("/saveCreator")
-    public CreatorDto saveCreator(@RequestBody CreatorDto creatorDto){
-        return creatorService.saveCreator(creatorDto);
+    public CreatorDto saveCreator(@RequestBody ReqCreatorDto reqCreatorDto){
+        CreatorDto creatorDto = creatorService.saveCreator(reqCreatorDto);
+        creatorDto.setUser_id(reqCreatorDto.getUser_id());
+        if (!userService.updateUserCreatorId(reqCreatorDto.getUser_id(), creatorDto.getCreator_id())) return null;
+        return creatorDto;
+    }
+
+    @Tag(name = "Creator", description = "작가 정보")
+    @Operation(summary = "작가 정보 조회", description = "작가정보, 장애정보, 작가작품리스트"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ResCreatorDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/saveCreator/{user_id}")
+    public ResCreatorDto findCreator(@PathVariable Integer user_id) throws JsonProcessingException {
+        UserDto userDto = userService.findUser(user_id);
+        FileDto fileDto = fileService.findFile(userDto.getProfile());
+        if(fileDto!=null)
+            userDto.setProfile_url(fileDto.getFile_url());
+        CreatorDto creatorDto = creatorService.findCreator(userDto.getCreator_id());
+        DisabledDto disabledDto = disabledService.findDisabled(creatorDto.getDisabled_id());
+        List<ArtworkDto> list = artworkService.findAllByCreatorId(user_id);
+
+        ResCreatorDto resCreatorDto = new ResCreatorDto();
+        resCreatorDto.setUserDto(userDto);
+        resCreatorDto.setCreatorDto(creatorDto);
+        resCreatorDto.setDisabledDto(disabledDto);
+        resCreatorDto.setArtworkDtoList(list);
+        return resCreatorDto;
     }
 
     /**
@@ -108,8 +132,30 @@ public class PoaController {
         return disabledService.saveDisabled(disabledDto);
     }
 
+    /**
+     * 장애 정보 조회
+     * @param disabled_id
+     * @return DisabledDto
+     */
+    @Tag(name = "Disabled", description = "장애 정보")
+    @Operation(summary = "장애 정보 조회", description = ""
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = DisabledDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/findDisabled/{disabled_id}")
+    public DisabledDto findDisabled(@PathVariable Integer disabled_id){
+        return disabledService.findDisabled(disabled_id);
+    }
+
+    /**
+     * 파일 저장
+     * @param imgFile
+     * @return FileDto
+     */
     @Tag(name = "File", description = "파일")
-    @Operation(summary = "파일 저장", description = "file_url은 JSON이 저장됨."
+    @Operation(summary = "파일 저장", description = ""
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = FileDto.class), mediaType = "application/json"))
@@ -118,5 +164,22 @@ public class PoaController {
     @PostMapping(value = "/saveFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FileDto saveFile(@RequestPart List<MultipartFile> imgFile){
         return fileService.saveFiles(imgFile);
+    }
+
+    /**
+     * 파일 조회
+     * @param file_id
+     * @return FileDto
+     */
+    @Tag(name = "File", description = "파일")
+    @Operation(summary = "파일 조회", description = ""
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = FileDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping(value = "/findFile/{file_id}")
+    public FileDto findFile(@PathVariable Integer file_id){
+        return fileService.findFile(file_id);
     }
 }

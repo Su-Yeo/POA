@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CreatorDto { // 작가 정보 Dto
+public class ReqCreatorDto { // response 작가 정보 Dto
 
     @JsonIgnoreProperties(ignoreUnknown = true) // 값 무시
     @Schema(description = "작가 정보 id")
