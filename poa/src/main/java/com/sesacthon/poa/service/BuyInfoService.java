@@ -2,11 +2,14 @@ package com.sesacthon.poa.service;
 
 import com.sesacthon.poa.domain.BuyInfoEntity;
 import com.sesacthon.poa.dto.BuyInfoDto;
+import com.sesacthon.poa.dto.UserDto;
 import com.sesacthon.poa.dto.mapper.BuyInfoMapper;
 import com.sesacthon.poa.repository.BuyInfoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -25,4 +28,24 @@ public class BuyInfoService {
         BuyInfoEntity buyInfoEntity = buyInfoRepository.save(buyInfoMapper.toEntity(buyInfoDto));
         return buyInfoMapper.toDto(buyInfoEntity);
     }
+
+    /**
+     * buyInfo_id로 구매 정보 조회
+     * @param buyInfo_id
+     * @return BuyInfoDto
+     */
+    public BuyInfoDto findBuyInfoById(Integer buyInfo_id){
+        return buyInfoMapper.toDto(buyInfoRepository.findById(buyInfo_id).orElse(null));
+    }
+
+    /**
+     * 구매 취소 정보 저장
+     * @param buyInfo_id
+     * @return BuyInfoDto
+     */
+    public BuyInfoDto updateBuyInfoByBuyStateDeleteTime(Integer buyInfo_id, Integer buy_state, LocalDateTime delete_time) {
+        BuyInfoEntity buyInfoEntity = buyInfoRepository.updateBuyInfoByBuyStateDeletedTime(buyInfo_id,buy_state,delete_time);
+        return buyInfoMapper.toDto(buyInfoEntity);
+    }
+
 }

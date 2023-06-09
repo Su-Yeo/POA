@@ -9,12 +9,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -226,11 +228,20 @@ public class PoaController2 {
     })
     @ResponseBody
     @PostMapping("/saveBuyInfo/{buyInfo_id}")
-    public BuyInfoDto deletedBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
-        BuyInfoDto savedBuyInfoDto = buyInfoService.saveBuyInfo(buyInfoDto);
-        savedBuyInfoDto.setVisible(buyInfoDto.getVisible());
-//        if(!artworkService.updateArtworkVisible(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible())) return null;  artwork_id로 visible을 업데이트 할때
-        if(!artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible(),0)) return null; // artwork_id로 visible과 artwork_sate를 업데이트 할때
+    public BuyInfoDto updateBuyInfo(@PathParam("buyInfo_id") Integer buyInfo_id){
+        BuyInfoDto buyInfoDto = buyInfoService.findBuyInfoById(buyInfo_id);  // buyInfoId를 사용하여 해당 BuyInfoDto 조회
+
+        if (buyInfoDto == null) {
+            // 해당 buyInfoId에 해당하는 BuyInfoDto가 없을 경우 처리할 로직 작성
+            return null;
+        }
+
+//        buyInfoDto.setBuy_state(0);
+//        buyInfoDto.setDelete_time(LocalDateTime.now());
+
+        BuyInfoDto updateBuyInfo = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
+        return updateBuyInfo;
+
 
         return buyInfoDto;
     }
