@@ -213,6 +213,27 @@ public class PoaController2 {
 
         return buyInfoDto;
     }
+    /**
+     * 구매 취소 정보 저장
+     * @param buyInfo_id
+     * @return BuyInfoDto
+     */
+    @Tag(name = "cancelBuyInfo", description = "구매 취소 정보")
+    @Operation(summary = "구매 정보 저장", description = "구매 취소 정보 저장 후 작품 state 업데이트."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BuyInfoDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @PostMapping("/saveBuyInfo/{buyInfo_id}")
+    public BuyInfoDto deletedBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
+        BuyInfoDto savedBuyInfoDto = buyInfoService.saveBuyInfo(buyInfoDto);
+        savedBuyInfoDto.setVisible(buyInfoDto.getVisible());
+//        if(!artworkService.updateArtworkVisible(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible())) return null;  artwork_id로 visible을 업데이트 할때
+        if(!artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible(),0)) return null; // artwork_id로 visible과 artwork_sate를 업데이트 할때
+
+        return buyInfoDto;
+    }
 
 //1명이 산 구매 리스트 전달
 //@ResponseBody

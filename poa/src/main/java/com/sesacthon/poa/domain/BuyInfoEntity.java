@@ -34,8 +34,10 @@ public class BuyInfoEntity extends BaseTimeEntity { // 구매정보 테이블
 
     private int visible;// true,1: 공개허용 / false,0: 비허용
 
+    private Integer buy_state;// 1: 결재완료 / 0: 결재취소 /다른거 추후 추가
+
     @Builder
-    public BuyInfoEntity(Integer buyInfo_id, Integer artwork_id, Integer user_id, String buy_address, Integer pay_price, String pay_date, int visible) {
+    public BuyInfoEntity(Integer buyInfo_id, Integer artwork_id, Integer user_id, String buy_address, Integer pay_price, String pay_date, int visible, Integer buy_state) {
         this.buyInfo_id = buyInfo_id;
         this.artwork_id = artwork_id;
         this.user_id = user_id;
@@ -43,5 +45,6 @@ public class BuyInfoEntity extends BaseTimeEntity { // 구매정보 테이블
         this.pay_price = pay_price;
         this.pay_date = pay_date;
         this.visible = visible;
+        this.buy_state = buy_state;
     }
 }
