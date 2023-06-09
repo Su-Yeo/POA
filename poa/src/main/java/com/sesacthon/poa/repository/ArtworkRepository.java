@@ -40,6 +40,12 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "ORDER BY a.artwork_id DESC",
             nativeQuery = true)
     List<ArtworkEntity> findAllByOrderByArtworkIdDesc();
+    @Query(value = "SELECT a.* " +
+            "FROM artwork a " +
+            "WHERE artwork_state = TRUE AND visible = TRUE "+
+            "ORDER BY a.artwork_id DESC",
+            nativeQuery = true)
+    List<ArtworkEntity> findAllByArtworkStateOrderByArtworkIdDesc();
 
 
     @Query(value = "SELECT a.* " +

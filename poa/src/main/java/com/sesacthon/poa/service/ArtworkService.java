@@ -45,6 +45,17 @@ public class ArtworkService {
         return artworkMapper.toDtoList(lastArtworks);
     }
 
+  /**
+     * 구매가능한 최신의 아트 정보리스트 전달
+     * @return List<ArtworkDto>
+     */
+    public List<ArtworkDto> findAllBuyingDesc(){
+//        List<ArtworkEntity> lastArtworks = artworkRepository.findAll(Sort.by(Sort.Direction.DESC, "artwork_id"));
+//        List<ArtworkEntity> lastArtworks = artworkRepository.findAll();
+        List<ArtworkEntity> buyingArtworks = artworkRepository.findAllByArtworkStateOrderByArtworkIdDesc();
+        return artworkMapper.toDtoList(buyingArtworks);
+    }
+
 
     /**
      * 1명의 유저가 좋아요한 리스트

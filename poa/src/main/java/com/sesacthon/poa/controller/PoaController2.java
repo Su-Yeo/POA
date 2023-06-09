@@ -43,8 +43,8 @@ public class PoaController2 {
     public ArtworkDto saveArtwork(@RequestPart ArtworkDto artworkDto, @RequestPart MultipartFile imgFile){
         FileDto fileDto = fileService.saveFile(imgFile);
         artworkDto.setFile_id(fileDto.getFile_id());
-        artworkDto = artworkService.saveArtwork(artworkDto);
         artworkDto.setFile_url(fileDto.getFile_url());
+        artworkDto = artworkService.saveArtwork(artworkDto);
         return artworkDto;
     }
     /**
@@ -82,7 +82,29 @@ public class PoaController2 {
     @GetMapping("/artwork/last")
 
     public List<ArtworkDto> findAllDesc(){
+
         return artworkService.findAllDesc();
+    }
+
+
+    /**
+     * 여러개의 아트의 정보 구매가능 및 최신순 전달
+     * @List<ArtworkDto>
+     */
+    @Tag(name = "BuyingArtworkList", description = "구매가능최신작품리스트")
+    @Operation(summary = "구매가능 최신 작품 리스트 조회", description = "구매가능 최신 작품 여러개의 정보."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(schema = @Schema(implementation = ArtworkDto.class),
+                            mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/artwork/buying")
+
+    public List<ArtworkDto> findAllBuyingDesc(){
+
+        return artworkService.findAllBuyingDesc();
     }
 
 
