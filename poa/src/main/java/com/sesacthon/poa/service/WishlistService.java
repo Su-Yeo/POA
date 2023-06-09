@@ -20,4 +20,11 @@ public class WishlistService {
         return wishlistMapper.toDto(wishlistRepository.save(wishlistEntity));
     }
 
+    /**
+     * 좋아요 취소
+     * @param wishlistId
+     */
+    public void deleteWishlist(Integer wishlistId) {
+        wishlistRepository.deleteById(wishlistId);
+    }
 }

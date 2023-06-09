@@ -22,10 +22,10 @@ import java.util.List;
 @RestController
 @Slf4j
 public class PoaController2 {
-    private final ArtworkService artworkService; //
-    private final WishlistService wishlistService; //
+    private final ArtworkService artworkService; // 작품
+    private final WishlistService wishlistService; // 좋아요
     private final FileService fileService; // 파일
-    private final BuyInfoService buyInfoService; // 파일
+    private final BuyInfoService buyInfoService; // 구매목록
 
     /**
      * 1개의 아트 정보 저장
@@ -47,8 +47,9 @@ public class PoaController2 {
         artworkDto = artworkService.saveArtwork(artworkDto);
         return artworkDto;
     }
+
     /**
-     * 1개의 아트의 정보 전달
+     * 1개의 작품 정보 전달
      * @param artwork_id
      * @return ArtworkDto
      */
@@ -61,7 +62,6 @@ public class PoaController2 {
     @ResponseBody
     @GetMapping("/artwork/{artwork_id}")
     public ArtworkDto findArtwork(@PathVariable Integer artwork_id) {
-
         return artworkService.findArtwork(artwork_id);
     }
 
@@ -86,6 +86,21 @@ public class PoaController2 {
         return artworkService.findAllDesc();
     }
 
+    /**
+     * 모든 유저가 좋아요한 리스트
+     * @return List<ArtworkDto>
+     */
+    @Tag(name = "Artwork", description = "작품")
+    @Operation(summary = "1명의 유저가 좋아요한 작품 리스트 조회", description = "1명의 유저가 좋아요한 여러개의 작품 정보."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/artwork/wishlist")
+    public List<ArtworkDto> getArtworkWishlist() {
+        return artworkService.getArtworkWishlist();
+    }
 
     /**
      * 여러개의 아트의 정보 구매가능 및 최신순 전달
@@ -114,8 +129,8 @@ public class PoaController2 {
      * @param wishlistDto
      * @return WishlistDto
      */
-    @Tag(name = "addWishlist", description = "좋아요 등록")
-    @Operation(summary = "좋아요 저장", description = "좋아요 저장."
+    @Tag(name = "Wishlist", description = "좋아요")
+    @Operation(summary = "1명의 유저가 1개의 작품에 좋아요 등록", description = "유저id와 작품id 필요."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = WishlistDto.class), mediaType = "application/json"))
@@ -128,21 +143,40 @@ public class PoaController2 {
     }
 
     /**
-     * 1명의 유저가 좋아요한 리스트
+     * 좋아요 취소
+     * @param wishlist_id
+     */
+    @Tag(name = "Wishlist", description = "좋아요")
+    @Operation(summary = "1명의 유저가 1개의 작품에 좋아요 취소", description = "좋아요id 필요."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = WishlistDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("deleteWishlist/{wishlist_id}")
+    public void deleteWishlist(@PathVariable Integer wishlist_id)
+    {
+        wishlistService.deleteWishlist(wishlist_id);
+    }
+
+    /**
+     * 1명의 유저가 좋아요한 최신순 작품 리스트
      * @param user_id
      * @return List<ArtworkDto>
      */
-    @Tag(name = "ArtworkWishlistList", description = "작품리스트")
-    @Operation(summary = "좋아요 작품 리스트 조회", description = "작품 여러개의 정보."
+    @Tag(name = "Wishlist", description = "좋아요")
+    @Operation(summary = "1명의 유저가 좋아요한 작품 리스트 최신순 조회", description = "1명의 유저가 좋아요한 여러개의 최신순 작품 정보."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
     })
     @ResponseBody
-    @GetMapping("/artwork/wishlist/{user_id}")
-    public List<ArtworkDto> getArtworkByUserId(@PathVariable Integer user_id) {
-       return artworkService.getArtworkByUserId(user_id);
+    @GetMapping("findWishlist/{user_id}")
+    public List<ArtworkDto> findWishlistByUserId(@PathVariable Integer user_id) {
+       return artworkService.findWishlistByUserId(user_id);
     }
+
+
 
 //1개의 작품에 좋아요한 갯수
 
