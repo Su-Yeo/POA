@@ -198,7 +198,7 @@ public class PoaController2 {
      * @param buyInfoDto
      * @return BuyInfoDto
      */
-    @Tag(name = "buyInfoDto", description = "구매 정보")
+    @Tag(name = "BuyInfo", description = "구매 정보 저장")
     @Operation(summary = "구매 정보 저장", description = "구매 정보 저장 후 유저 및 작가 정보, 작품 state 업데이트."
     )
     @ApiResponses({
@@ -220,7 +220,7 @@ public class PoaController2 {
      * @param buyInfo_id
      * @return BuyInfoDto
      */
-    @Tag(name = "cancelBuyInfo", description = "구매 취소 정보")
+    @Tag(name = "BuyInfo", description = "구매 취소 정보")
     @Operation(summary = "구매 취소 정보 저장", description = "구매 취소 정보 저장 후 작품 state 업데이트."
     )
     @ApiResponses({
@@ -240,8 +240,15 @@ public class PoaController2 {
 //        buyInfoDto.setDelete_time(LocalDateTime.now());
 
         boolean result = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
-        return null;
+//        return null;
 
+        ArtworkDto artworkDto = new ArtworkDto();
+        artworkDto.setArtwork_id(buyInfoDto.getArtwork_id());
+        artworkDto.setVisible(1);
+        artworkDto.setArtwork_state(1);
+
+        boolean result1 = artworkService.updateArtworkVisibleArtworkState(artworkDto.getArtwork_id(), 1,1);
+        return null;
 
 //        return buyInfoDto;
     }
