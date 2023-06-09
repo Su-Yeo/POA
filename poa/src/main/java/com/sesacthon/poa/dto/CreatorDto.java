@@ -17,9 +17,9 @@ public class CreatorDto { // 작가 정보 Dto
     @Schema(description = "유저 id")
     private Integer user_id;
 
-    @Schema(description = "소개")
-    @NotBlank(message = "소개 필수 입력 입니다.")
-    private String introduce;
+//    @Schema(description = "소개")
+//    @NotBlank(message = "소개 필수 입력 입니다.")
+//    private String introduce;
 
     @Schema(description = "작가 스토리")
     @NotBlank(message = "작가 스토리 필수 입력 입니다.")
