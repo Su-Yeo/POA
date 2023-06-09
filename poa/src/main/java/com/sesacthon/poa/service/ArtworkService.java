@@ -75,4 +75,15 @@ public class ArtworkService {
         List<ArtworkEntity> artworkEntityList = artworkRepository.findAllByCreatorId(creator_id);
         return artworkMapper.toDtoList(artworkEntityList);
     }
+//artwork의 visible 하나만 업데이트 할 때
+//    public boolean updateArtworkVisible(Integer artwork_id, int visible ){
+//        int i = artworkRepository.updateArtworkVisible(artwork_id, visible);
+//        return i==0 ? false : true;
+//    }
+//    artwork의 visible과 artwokr_state를 동시에 업데이트 할 때
+    public boolean updateArtworkVisibleArtworkState(Integer artwork_id, int visible,Integer artwork_state ){
+        int i = artworkRepository.updateArtworkVisibleArtworkState(artwork_id, visible, artwork_state);
+        return i==0 ? false : true;
+    }
+
 }

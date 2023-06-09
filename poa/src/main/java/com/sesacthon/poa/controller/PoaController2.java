@@ -150,7 +150,12 @@ public class PoaController2 {
     @ResponseBody
     @PostMapping("/saveBuyInfo")
     public BuyInfoDto saveBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
-        return buyInfoService.saveBuyInfo(buyInfoDto);
+        BuyInfoDto savedBuyInfoDto = buyInfoService.saveBuyInfo(buyInfoDto);
+        savedBuyInfoDto.setVisible(buyInfoDto.getVisible());
+//        if(!artworkService.updateArtworkVisible(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible())) return null;  artwork_id로 visible을 업데이트 할때
+        if(!artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible(),0)) return null; // artwork_id로 visible과 artwork_sate를 업데이트 할때
+
+        return buyInfoDto;
     }
 
 //1명이 산 구매 리스트 전달

@@ -13,9 +13,10 @@ import lombok.ToString;
 @Table(name = "Artwork")
 public class ArtworkEntity extends BaseTimeEntity { // 작품 테이블
     @Id
-    @Column(nullable = false, name = "artworkId")
+    @Column(nullable = false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer artwork_id;
+
     @Column(nullable = false)
     private Integer user_id; // 작가 id
 

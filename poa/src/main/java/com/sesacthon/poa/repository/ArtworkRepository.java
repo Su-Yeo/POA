@@ -2,8 +2,10 @@ package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,5 +46,30 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "WHERE a.user_id = :creator_id AND visible = TRUE ORDER BY artwork_id DESC ",
             nativeQuery = true)
     List<ArtworkEntity> findAllByCreatorId(@Param("creator_id") Integer creator_id);
+
+//    /**
+//     * 작품 visible 업데이트
+//     * @param artwork_id
+//     * @param visible
+//     * @return int
+//     */
+//    @Transactional(value = "transactionManager")
+//    @Modifying
+//    @Query(value = "UPDATE `artwork` SET visible = :visible WHERE artwork_id = :artwork_id", nativeQuery = true)
+//    int updateArtworkVisible(@Param("artwork_id") Integer artwork_id, @Param("visible") int visible);
+   /**
+     * 작품 visible 업데이트
+     * @param artwork_id
+     * @param visible
+     * @param artwork_state
+     * @return int
+     */
+    @Transactional(value = "transactionManager")
+    @Modifying
+    @Query(value = "UPDATE `artwork` SET visible = :visible, artwork_state = :artwork_state WHERE artwork_id = :artwork_id", nativeQuery = true)
+    int updateArtworkVisibleArtworkState(@Param("artwork_id") Integer artwork_id, @Param("visible") int visible, @Param("artwork_state") Integer artwork_state);
+
+
+
 
 }
