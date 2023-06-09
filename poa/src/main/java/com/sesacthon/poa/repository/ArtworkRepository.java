@@ -29,9 +29,10 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
     @Query(value = "SELECT a.* " +
             "FROM artwork a " +
             "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
-            "WHERE w.user_id = :user_id AND visible = TRUE",
+            "WHERE w.user_id = :user_id AND visible = TRUE " +
+            "ORDER BY w.wishlist_id DESC",
             nativeQuery = true)
-    List<ArtworkEntity> getArtworkByUserId(@Param("user_id") Integer user_id);
+    List<ArtworkEntity> findWishlistByUserId(@Param("user_id") Integer user_id);
 
 //        List<ArtworkEntity> findAll(Sort sort);
     @Query(value = "SELECT a.* " +

@@ -47,12 +47,12 @@ public class ArtworkService {
 
 
     /**
-     * 1명의 유저가 좋아요한 리스트
+     * 1명의 유저가 좋아요한 최신순 리스트
      * @param user_id
      * @return List<ArtworkDto>
      */
-    public List<ArtworkDto> getArtworkByUserId(Integer user_id){
-        List<ArtworkEntity> likedArtworks = artworkRepository.getArtworkByUserId(user_id);
+    public List<ArtworkDto> findWishlistByUserId(Integer user_id){
+        List<ArtworkEntity> likedArtworks = artworkRepository.findWishlistByUserId(user_id);
         return artworkMapper.toDtoList(likedArtworks);
     }
 
@@ -86,4 +86,8 @@ public class ArtworkService {
         return i==0 ? false : true;
     }
 
+
+    public List<ArtworkDto> getArtworkWishlist() {
+        return null;
+    }
 }
