@@ -43,9 +43,9 @@ public class BuyInfoService {
      * @param buyInfo_id
      * @return BuyInfoDto
      */
-    public BuyInfoDto updateBuyInfoByBuyStateDeleteTime(Integer buyInfo_id, Integer buy_state, LocalDateTime delete_time) {
-        BuyInfoEntity buyInfoEntity = buyInfoRepository.updateBuyInfoByBuyStateDeletedTime(buyInfo_id,buy_state,delete_time);
-        return buyInfoMapper.toDto(buyInfoEntity);
+    public boolean updateBuyInfoByBuyStateDeleteTime(Integer buyInfo_id, Integer buy_state, LocalDateTime delete_time) {
+        int i = buyInfoRepository.updateBuyInfoByBuyStateDeleteTime(buyInfo_id,buy_state,delete_time);
+        return i==0 ? false : true;
     }
 
 }

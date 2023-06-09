@@ -177,18 +177,6 @@ public class PoaController2 {
 
 
 
-//1개의 작품에 좋아요한 갯수
-
-//좋아요 많은 순서대로 필터링한 리스트
-//@ResponseBody
-//@GetMapping("/artwork/manyWish")
-//
-//public List<ArtworkDto> findAllCntWishlist(){
-//    return artworkService.findAllOrderByWishlist();
-//}
-
-
-
 //    BuyInfo controller
 //    구매정보 등록
     /**
@@ -236,11 +224,11 @@ public class PoaController2 {
 //        buyInfoDto.setBuy_state(0);
 //        buyInfoDto.setDelete_time(LocalDateTime.now());
 
-        BuyInfoDto updateBuyInfo = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
+        int updateBuyInfo = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
         return updateBuyInfo;
 
 
-        return buyInfoDto;
+//        return buyInfoDto;
     }
 
 //1명이 산 구매 리스트 전달
