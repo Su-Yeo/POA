@@ -80,7 +80,7 @@ public class ArtworkService {
 //        int i = artworkRepository.updateArtworkVisible(artwork_id, visible);
 //        return i==0 ? false : true;
 //    }
-//    artwork의 visible과 artwokr_state를 동시에 업데이트 할 때
+//    artwork의 visible과 artwork_state를 동시에 업데이트 할 때
     public boolean updateArtworkVisibleArtworkState(Integer artwork_id, int visible,Integer artwork_state ){
         int i = artworkRepository.updateArtworkVisibleArtworkState(artwork_id, visible, artwork_state);
         return i==0 ? false : true;

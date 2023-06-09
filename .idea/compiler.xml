@@ -12,7 +12,7 @@
         <module name="poa.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17">
       <module name="com.sesacthon.poa.main" target="17" />
       <module name="com.sesacthon.poa.test" target="17" />
       <module name="com.sesacthon.poa.test~1" target="17" />
