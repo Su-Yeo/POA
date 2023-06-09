@@ -31,7 +31,7 @@ public class CreatorService {
 
     public ResCreatorDto findCreator(Integer user_id){
         List<Object[]> objects = creatorRepository.findResCreator(user_id);
-        if(objects == null) return null;
+        if(objects.isEmpty()) return null;
 
         Object[] object = objects.get(0);
 

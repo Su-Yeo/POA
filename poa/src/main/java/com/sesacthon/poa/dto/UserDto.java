@@ -22,8 +22,8 @@ public class UserDto {
     @NotBlank(message = "비밀번호 필수 입력 입니다.")
     private String pw;
 
-    @Schema(description = "비밀번호", example = "1234")
-    @NotBlank(message = "비밀번호 필수 입력 입니다.")
+    @Schema(description = "이름", example = "홍길동")
+    @NotBlank(message = "이름 필수 입력 입니다.")
     private String name;
 
     @Schema(description = "전화번호", example = "010-1234-1234")

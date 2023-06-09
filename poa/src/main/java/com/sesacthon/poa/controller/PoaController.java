@@ -89,6 +89,11 @@ public class PoaController {
         return creatorDto;
     }
 
+    /**
+     * 작가 정보 조회
+     * @param user_id
+     * @return ResCreatorDto
+     */
     @Tag(name = "Creator", description = "작가 정보")
     @Operation(summary = "작가 정보 조회", description = "작가정보, 장애정보, 작가작품리스트"
     )
@@ -96,11 +101,12 @@ public class PoaController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ResCreatorDto.class), mediaType = "application/json"))
     })
     @ResponseBody
-    @GetMapping("/saveCreator/{user_id}")
+    @GetMapping("/findCreator/{user_id}")
     public ResCreatorDto findCreator(@PathVariable Integer user_id){
         ResCreatorDto resCreatorDto = creatorService.findCreator(user_id);
-        List<ArtworkDto> list = artworkService.findAllByCreatorId(user_id);
+        if(resCreatorDto==null) return null;
 
+        List<ArtworkDto> list = artworkService.findAllByCreatorId(user_id);
         resCreatorDto.setArtworkDtoList(list);
         return resCreatorDto;
     }
@@ -137,6 +143,22 @@ public class PoaController {
     @GetMapping("/findDisabled/{disabled_id}")
     public DisabledDto findDisabled(@PathVariable Integer disabled_id){
         return disabledService.findDisabled(disabled_id);
+    }
+
+    /**
+     * 장애 정보 전체 조회
+     * @return DisabledDto
+     */
+    @Tag(name = "Disabled", description = "장애 정보")
+    @Operation(summary = "장애 정보 전체 조회", description = ""
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = DisabledDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/findDisabledAll")
+    public List<DisabledDto> findDisabledAll(){
+        return disabledService.findDisabledAll();
     }
 
     /**

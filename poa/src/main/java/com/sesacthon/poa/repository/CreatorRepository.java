@@ -11,9 +11,9 @@ import java.util.List;
 public interface CreatorRepository extends JpaRepository<CreatorEntity, Integer> {
     @Query(value = "SELECT u.name, f.file_url as profile_url, c.story, d.disabled_type, d.disabled_text " +
             "FROM `user` u " +
-            "JOIN file f ON f.file_id = u.profile " +
-            "JOIN creator c ON c.creator_id = u.creator_id " +
-            "JOIN disabled d ON d.disabled_id = c.disabled_id " +
+            "JOIN file f ON u.profile = f.file_id " +
+            "JOIN creator c ON u.creator_id = c.creator_id " +
+            "JOIN disabled d ON c.disabled_id = d.disabled_id " +
             "WHERE u.user_id = :user_id", nativeQuery = true)
     List<Object[]> findResCreator(@Param("user_id") Integer user_id);
 }

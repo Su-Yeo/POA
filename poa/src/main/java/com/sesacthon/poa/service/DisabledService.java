@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -32,5 +34,13 @@ public class DisabledService {
      */
     public DisabledDto findDisabled(Integer disabled_id) {
         return disabledMapper.toDto(disabledRepository.findById(disabled_id).orElse(null));
+    }
+
+    /**
+     * 장애 정보 전체 조회
+     * @return
+     */
+    public List<DisabledDto> findDisabledAll() {
+        return disabledMapper.toDtoList(disabledRepository.findAll());
     }
 }
