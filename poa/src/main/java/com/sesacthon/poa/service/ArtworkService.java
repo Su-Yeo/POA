@@ -105,4 +105,13 @@ public class ArtworkService {
         List<ArtworkEntity> artworkEntityList = artworkRepository.findArtworkByWishList();
         return artworkMapper.toDtoList(artworkEntityList);
     }
+
+    /**
+     * 최근 30일이내 등록된 좋아요 많은 순 작품 리스트 10개 (메인 home 리스트)
+     * @return List<ArtworkDto>
+     */
+    public List<ArtworkDto> findArtworkHome() {
+        List<ArtworkEntity> artworkEntityList = artworkRepository.findArtworkHome();
+        return artworkMapper.toDtoList(artworkEntityList);
+    }
 }

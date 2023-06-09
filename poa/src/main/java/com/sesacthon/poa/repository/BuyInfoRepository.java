@@ -20,7 +20,9 @@ public interface BuyInfoRepository extends JpaRepository<BuyInfoEntity, Integer>
      */
     @Transactional(value = "transactionManager")
     @Modifying
-    @Query(value = "UPDATE `buyInfo` SET buy_state = :buy_state, delete_time = :delete_time WHERE buyInfo_id = :buyInfo_id", nativeQuery = true)
+    @Query(value = " update buy_info b " +
+            "SET b.buy_state = :buy_state, b.delete_time = :delete_time " +
+            "WHERE B.buy_info_id = :buyInfo_id", nativeQuery = true)
     int updateBuyInfoByBuyStateDeleteTime(@Param("buyInfo_id") Integer buyInfo_id, @Param("buy_state") Integer buy_state, @Param("delete_time") LocalDateTime delete_time);
 
 

@@ -105,6 +105,22 @@ public class PoaController2 {
     }
 
     /**
+     * 최근 30일이내 등록된 좋아요 많은 순 작품 리스트 10개(메인 home 리스트)
+     * @return List<ArtworkDto>
+     */
+    @Tag(name = "Artwork", description = "작품")
+    @Operation(summary = "최근 30일이내 등록된 좋아요 많은 순 작품 리스트 조회 10개", description = "좋아요 갯수가 같으면 최신순으로 정렬"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/artwork/home")
+    public List<ArtworkDto> findArtworkHome() {
+        return artworkService.findArtworkHome();
+    }
+
+    /**
      * 여러개의 아트의 정보 구매가능 및 최신순 전달
      * @List<ArtworkDto>
      */
@@ -175,8 +191,6 @@ public class PoaController2 {
        return artworkService.findWishlistByUserId(user_id);
     }
 
-
-
 //    BuyInfo controller
 //    구매정보 등록
     /**
@@ -193,6 +207,7 @@ public class PoaController2 {
     @ResponseBody
     @PostMapping("/saveBuyInfo")
     public BuyInfoDto saveBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
+        buyInfoDto.setBuy_state(1);
         BuyInfoDto savedBuyInfoDto = buyInfoService.saveBuyInfo(buyInfoDto);
         savedBuyInfoDto.setVisible(buyInfoDto.getVisible());
 //        if(!artworkService.updateArtworkVisible(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible())) return null;  artwork_id로 visible을 업데이트 할때
@@ -206,7 +221,7 @@ public class PoaController2 {
      * @return BuyInfoDto
      */
     @Tag(name = "cancelBuyInfo", description = "구매 취소 정보")
-    @Operation(summary = "구매 정보 저장", description = "구매 취소 정보 저장 후 작품 state 업데이트."
+    @Operation(summary = "구매 취소 정보 저장", description = "구매 취소 정보 저장 후 작품 state 업데이트."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BuyInfoDto.class), mediaType = "application/json"))
@@ -224,8 +239,8 @@ public class PoaController2 {
 //        buyInfoDto.setBuy_state(0);
 //        buyInfoDto.setDelete_time(LocalDateTime.now());
 
-        int updateBuyInfo = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
-        return updateBuyInfo;
+        boolean result = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
+        return null;
 
 
 //        return buyInfoDto;

@@ -89,4 +89,17 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC",
             nativeQuery = true)
     List<ArtworkEntity> findArtworkByWishList();
+
+    /**
+     * 최근 30일이내 등록된 좋아요 많은 순 작품 리스트 10개 (메인 home 리스트)
+     * @return List<ArtworkEntity>
+     */
+    @Query(value = "SELECT a.* " +
+            "FROM artwork a " +
+            "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
+            "WHERE a.create_time >= DATE_ADD(CURDATE(), INTERVAL -1 MONTH) AND visible = TRUE " +
+            "GROUP BY w.artwork_id " +
+            "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC LIMIT 10",
+            nativeQuery = true)
+    List<ArtworkEntity> findArtworkHome();
 }

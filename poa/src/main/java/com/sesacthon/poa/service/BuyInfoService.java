@@ -45,6 +45,14 @@ public class BuyInfoService {
      */
     public boolean updateBuyInfoByBuyStateDeleteTime(Integer buyInfo_id, Integer buy_state, LocalDateTime delete_time) {
         int i = buyInfoRepository.updateBuyInfoByBuyStateDeleteTime(buyInfo_id,buy_state,delete_time);
+//        if (i > 0) {
+//            BuyInfoDto buyInfoDto = new BuyInfoDto();
+//            buyInfoDto.setBuyInfo_id(buyInfo_id);
+//            buyInfoDto.setBuy_state(buy_state);
+//            buyInfoDto.setDelete_time(delete_time);
+//            return buyInfoDto;
+//        }
+//        return null;
         return i==0 ? false : true;
     }
 
