@@ -77,7 +77,16 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
     @Query(value = "UPDATE `artwork` SET visible = :visible, artwork_state = :artwork_state WHERE artwork_id = :artwork_id", nativeQuery = true)
     int updateArtworkVisibleArtworkState(@Param("artwork_id") Integer artwork_id, @Param("visible") int visible, @Param("artwork_state") Integer artwork_state);
 
-
-
-
+    /**
+     * 좋아요 많은 순 작품 리스트
+     * @return List<ArtworkEntity>
+     */
+    @Query(value = "SELECT a.* " +
+            "FROM artwork a " +
+            "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
+            "WHERE visible = TRUE " +
+            "GROUP BY w.artwork_id " +
+            "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC",
+            nativeQuery = true)
+    List<ArtworkEntity> findArtworkByWishList();
 }

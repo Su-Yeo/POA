@@ -89,19 +89,19 @@ public class PoaController2 {
     }
 
     /**
-     * 모든 유저가 좋아요한 리스트
+     * 좋아요 많은 순 작품 리스트
      * @return List<ArtworkDto>
      */
     @Tag(name = "Artwork", description = "작품")
-    @Operation(summary = "1명의 유저가 좋아요한 작품 리스트 조회", description = "1명의 유저가 좋아요한 여러개의 작품 정보."
+    @Operation(summary = "좋아요 많은 순 작품 리스트 조회", description = "좋아요 갯수가 같으면 최신순으로 정렬"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
     })
     @ResponseBody
     @GetMapping("/artwork/wishlist")
-    public List<ArtworkDto> getArtworkWishlist() {
-        return artworkService.getArtworkWishlist();
+    public List<ArtworkDto> findArtworkByWishList() {
+        return artworkService.findArtworkByWishList();
     }
 
     /**
@@ -151,9 +151,6 @@ public class PoaController2 {
     @Tag(name = "Wishlist", description = "좋아요")
     @Operation(summary = "1명의 유저가 1개의 작품에 좋아요 취소", description = "좋아요id 필요."
     )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = WishlistDto.class), mediaType = "application/json"))
-    })
     @ResponseBody
     @GetMapping("deleteWishlist/{wishlist_id}")
     public void deleteWishlist(@PathVariable Integer wishlist_id)

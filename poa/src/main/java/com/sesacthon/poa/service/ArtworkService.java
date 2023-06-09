@@ -97,8 +97,12 @@ public class ArtworkService {
         return i==0 ? false : true;
     }
 
-
-    public List<ArtworkDto> getArtworkWishlist() {
-        return null;
+    /**
+     * 좋아요 많은 순 작품 리스트
+     * @return List<ArtworkDto>
+     */
+    public List<ArtworkDto> findArtworkByWishList() {
+        List<ArtworkEntity> artworkEntityList = artworkRepository.findArtworkByWishList();
+        return artworkMapper.toDtoList(artworkEntityList);
     }
 }
