@@ -1,6 +1,5 @@
 package com.sesacthon.poa.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sesacthon.poa.dto.*;
 import com.sesacthon.poa.service.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -98,19 +97,10 @@ public class PoaController {
     })
     @ResponseBody
     @GetMapping("/saveCreator/{user_id}")
-    public ResCreatorDto findCreator(@PathVariable Integer user_id) throws JsonProcessingException {
-        UserDto userDto = userService.findUser(user_id);
-        FileDto fileDto = fileService.findFile(userDto.getProfile());
-        if(fileDto!=null)
-            userDto.setProfile_url(fileDto.getFile_url());
-        CreatorDto creatorDto = creatorService.findCreator(userDto.getCreator_id());
-        DisabledDto disabledDto = disabledService.findDisabled(creatorDto.getDisabled_id());
+    public ResCreatorDto findCreator(@PathVariable Integer user_id){
+        ResCreatorDto resCreatorDto = creatorService.findCreator(user_id);
         List<ArtworkDto> list = artworkService.findAllByCreatorId(user_id);
 
-        ResCreatorDto resCreatorDto = new ResCreatorDto();
-        resCreatorDto.setUserDto(userDto);
-        resCreatorDto.setCreatorDto(creatorDto);
-        resCreatorDto.setDisabledDto(disabledDto);
         resCreatorDto.setArtworkDtoList(list);
         return resCreatorDto;
     }

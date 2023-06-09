@@ -17,8 +17,8 @@ public class CreatorEntity { // 작가 정보 테이블
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer creator_id;
 
-    @Column(nullable = false)
-    private String introduce;
+//    @Column(nullable = false)
+//    private String introduce;
 
     @Column(nullable = false)
     private String story;
@@ -26,9 +26,8 @@ public class CreatorEntity { // 작가 정보 테이블
     private Integer disabled_id;
 
     @Builder
-    public CreatorEntity(Integer creator_id, String introduce, String story, Integer disabled_id) {
+    public CreatorEntity(Integer creator_id, String story, Integer disabled_id) {
         this.creator_id = creator_id;
-        this.introduce = introduce;
         this.story = story;
         this.disabled_id = disabled_id;
     }

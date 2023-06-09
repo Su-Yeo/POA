@@ -9,11 +9,15 @@ import java.util.List;
 @NoArgsConstructor
 public class ResCreatorDto { // response 작가 정보 Dto
 
-    private UserDto userDto;
+    private String name;
 
-    private CreatorDto creatorDto;
+    private String profile_url;
 
-    private DisabledDto disabledDto;
+    private String story;
+
+    private String disabled_type;
+
+    private String disabled_text;
 
     private List<ArtworkDto> artworkDtoList;
 }
