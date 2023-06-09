@@ -103,6 +103,22 @@ public class PoaController2 {
     }
 
     /**
+     * 최근 30일이내 등록된 좋아요 많은 순 작품 리스트 10개(메인 home 리스트)
+     * @return List<ArtworkDto>
+     */
+    @Tag(name = "Artwork", description = "작품")
+    @Operation(summary = "최근 30일이내 등록된 좋아요 많은 순 작품 리스트 조회 10개", description = "좋아요 갯수가 같으면 최신순으로 정렬"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/artwork/home")
+    public List<ArtworkDto> findArtworkHome() {
+        return artworkService.findArtworkHome();
+    }
+
+    /**
      * 여러개의 아트의 정보 구매가능 및 최신순 전달
      * @List<ArtworkDto>
      */
@@ -172,20 +188,6 @@ public class PoaController2 {
     public List<ArtworkDto> findWishlistByUserId(@PathVariable Integer user_id) {
        return artworkService.findWishlistByUserId(user_id);
     }
-
-
-
-//1개의 작품에 좋아요한 갯수
-
-//좋아요 많은 순서대로 필터링한 리스트
-//@ResponseBody
-//@GetMapping("/artwork/manyWish")
-//
-//public List<ArtworkDto> findAllCntWishlist(){
-//    return artworkService.findAllOrderByWishlist();
-//}
-
-
 
 //    BuyInfo controller
 //    구매정보 등록
