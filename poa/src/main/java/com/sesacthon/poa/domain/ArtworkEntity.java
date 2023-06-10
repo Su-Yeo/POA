@@ -20,9 +20,6 @@ public class ArtworkEntity extends BaseTimeEntity { // 작품 테이블
     @Column(nullable = false)
     private Integer user_id; // 작가 id
 
-
-    private Integer category_id;
-
     @Column(nullable = false)
 //    private Integer file_id;
     private String file_url;
@@ -42,12 +39,12 @@ public class ArtworkEntity extends BaseTimeEntity { // 작품 테이블
     @Column(columnDefinition = "TINYINT", length=1)
     private int visible; // true,1: 공개허용 / false,0: 비허용
 
+    private String user_name;
+
     @Builder
-    public ArtworkEntity(Integer artwork_id, Integer user_id, Integer category_id, String file_url, String title, String content, Integer artwork_price, String artwork_size, Integer artwork_state, int visible) {
+    public ArtworkEntity(Integer artwork_id, Integer user_id, String file_url, String title, String content, Integer artwork_price, String artwork_size, Integer artwork_state, int visible, String user_name) {
         this.artwork_id = artwork_id;
         this.user_id = user_id;
-        this.category_id = category_id;
-//        this.file_id = file_id;
         this.file_url = file_url;
         this.title = title;
         this.content = content;
@@ -55,5 +52,6 @@ public class ArtworkEntity extends BaseTimeEntity { // 작품 테이블
         this.artwork_size = artwork_size;
         this.artwork_state = artwork_state;
         this.visible = visible;
+        this.user_name = user_name;
     }
 }

@@ -29,6 +29,8 @@ public class PoaController2 {
     private final FileService fileService; // 파일
     private final BuyInfoService buyInfoService; // 구매목록
 
+    private final UserService userService; // 유저
+
     /**
      * 1개의 아트 정보 저장
      * @param artworkDto
@@ -47,6 +49,7 @@ public class PoaController2 {
         artworkDto.setFile_id(fileDto.getFile_id());
         artworkDto.setFile_url(fileDto.getFile_url());
         artworkDto.setArtwork_state(1);
+        artworkDto.setVisible(1);
         artworkDto = artworkService.saveArtwork(artworkDto);
         return artworkDto;
     }
@@ -65,7 +68,8 @@ public class PoaController2 {
     @ResponseBody
     @GetMapping("/artwork/{artwork_id}")
     public ArtworkDto findArtwork(@PathVariable Integer artwork_id) {
-        return artworkService.findArtwork(artwork_id);
+        ArtworkDto artworkDto = artworkService.findArtwork(artwork_id);
+        return artworkDto;
     }
 
 //    artwork 리스트 정보 전달

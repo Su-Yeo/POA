@@ -13,7 +13,7 @@ public class ArtworkDto { // 작품 Dto
 
     private Integer user_id;
 
-    private Integer category_id;
+    private String user_name;
 
     private Integer file_id;
 

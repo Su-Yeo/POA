@@ -1,6 +1,7 @@
 package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
+import com.sesacthon.poa.dto.ArtworkDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer> {
 
@@ -102,4 +104,18 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
             "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC LIMIT 10",
             nativeQuery = true)
     List<ArtworkEntity> findArtworkHome();
+
+//    @Query(value = "select a.*, u.name " +
+//            "from artwork a " +
+//            "join `user` u on a.artwork_id = u.user_id " +
+//            "where artwork_id = :artwork_id ",
+//            nativeQuery = true)
+//    ArtworkEntity findArtworkById(@Param("artwork_id") Integer artwork_id);
+
+//    @Query(value = "select new com.sesacthon.poa.dto(artwork_id, a.user_id, a.category_id, a.file_id, a.file_url, a.title, a.content, a.artwork_price, a.artwork_size, a.artwork_state, a.visible, u.name as user_name) " +
+//            "from artwork a " +
+//            "join `user` u on a.artwork_id = u.user_id " +
+//            "where artwork_id = :artwork_id ",
+//            nativeQuery = true)
+//    ArtworkDto findArtworkById(@Param("artwork_id") Integer artwork_id);
 }
