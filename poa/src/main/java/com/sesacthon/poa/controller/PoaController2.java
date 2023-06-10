@@ -46,6 +46,7 @@ public class PoaController2 {
         FileDto fileDto = fileService.saveFile(imgFile);
         artworkDto.setFile_id(fileDto.getFile_id());
         artworkDto.setFile_url(fileDto.getFile_url());
+        artworkDto.setArtwork_state(1);
         artworkDto = artworkService.saveArtwork(artworkDto);
         return artworkDto;
     }
@@ -109,7 +110,7 @@ public class PoaController2 {
      * @return List<ArtworkDto>
      */
     @Tag(name = "Artwork", description = "작품")
-    @Operation(summary = "최근 30일이내 등록된 좋아요 많은 순 작품 리스트 조회 10개", description = "좋아요 갯수가 같으면 최신순으로 정렬"
+    @Operation(summary = "메인 home 작품 리스트", description = "최근 30일이내 등록된 좋아요 많은 순 작품 리스트 조회 10개"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
@@ -198,7 +199,7 @@ public class PoaController2 {
      * @param buyInfoDto
      * @return BuyInfoDto
      */
-    @Tag(name = "BuyInfo", description = "구매 정보 저장")
+    @Tag(name = "BuyInfo", description = "구매 정보")
     @Operation(summary = "구매 정보 저장", description = "구매 정보 저장 후 유저 및 작가 정보, 작품 state 업데이트."
     )
     @ApiResponses({
@@ -209,48 +210,33 @@ public class PoaController2 {
     public BuyInfoDto saveBuyInfo(@RequestBody BuyInfoDto buyInfoDto){
         buyInfoDto.setBuy_state(1);
         BuyInfoDto savedBuyInfoDto = buyInfoService.saveBuyInfo(buyInfoDto);
-        savedBuyInfoDto.setVisible(buyInfoDto.getVisible());
-//        if(!artworkService.updateArtworkVisible(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible())) return null;  artwork_id로 visible을 업데이트 할때
-        if(!artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), savedBuyInfoDto.getVisible(),0)) return null; // artwork_id로 visible과 artwork_sate를 업데이트 할때
 
-        return buyInfoDto;
+        if(!artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), buyInfoDto.getVisible(),0)) return null; // artwork_id로 visible과 artwork_sate를 업데이트 할때
+
+        return savedBuyInfoDto;
     }
     /**
      * 구매 취소 정보 저장
      * @param buyInfo_id
      * @return BuyInfoDto
      */
-    @Tag(name = "BuyInfo", description = "구매 취소 정보")
-    @Operation(summary = "구매 취소 정보 저장", description = "구매 취소 정보 저장 후 작품 state 업데이트."
+    @Tag(name = "BuyInfo", description = "구매 정보")
+    @Operation(summary = "구매 취소", description = "구매 취소 후 작품 state 업데이트."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = BuyInfoDto.class), mediaType = "application/json"))
     })
     @ResponseBody
-    @PostMapping("/saveBuyInfo/{buyInfo_id}")
-    public BuyInfoDto updateBuyInfo(@PathParam("buyInfo_id") Integer buyInfo_id){
+    @PostMapping("/cancelBuyInfo/{buyInfo_id}")
+    public BuyInfoDto cancelBuyInfo(@PathParam("buyInfo_id") Integer buyInfo_id){
+        boolean result = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id);
+        if(!result) return null;
+
         BuyInfoDto buyInfoDto = buyInfoService.findBuyInfoById(buyInfo_id);  // buyInfoId를 사용하여 해당 BuyInfoDto 조회
+        artworkService.updateArtworkVisibleArtworkState(buyInfoDto.getArtwork_id(), 1,1);
+        buyInfoDto.setVisible(1);
 
-        if (buyInfoDto == null) {
-            // 해당 buyInfoId에 해당하는 BuyInfoDto가 없을 경우 처리할 로직 작성
-            return null;
-        }
-
-//        buyInfoDto.setBuy_state(0);
-//        buyInfoDto.setDelete_time(LocalDateTime.now());
-
-        boolean result = buyInfoService.updateBuyInfoByBuyStateDeleteTime(buyInfo_id, 0, LocalDateTime.now());
-//        return null;
-
-        ArtworkDto artworkDto = new ArtworkDto();
-        artworkDto.setArtwork_id(buyInfoDto.getArtwork_id());
-        artworkDto.setVisible(1);
-        artworkDto.setArtwork_state(1);
-
-        boolean result1 = artworkService.updateArtworkVisibleArtworkState(artworkDto.getArtwork_id(), 1,1);
-        return null;
-
-//        return buyInfoDto;
+        return buyInfoDto;
     }
 
 //1명이 산 구매 리스트 전달

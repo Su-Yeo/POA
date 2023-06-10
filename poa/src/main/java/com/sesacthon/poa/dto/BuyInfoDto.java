@@ -18,7 +18,7 @@ public class BuyInfoDto { // 구매정보 Dto
 
     private Integer pay_price;
 
-    private String pay_date;
+//    private String pay_date;
 
     private int visible; // // true,1: 공개허용 / false,0: 비허용
 
