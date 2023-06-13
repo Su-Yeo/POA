@@ -1,7 +1,6 @@
 package com.sesacthon.poa.repository;
 
 import com.sesacthon.poa.domain.ArtworkEntity;
-import com.sesacthon.poa.dto.ArtworkDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer> {
 
@@ -39,8 +37,8 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
 //        List<ArtworkEntity> findAll(Sort sort);
     @Query(value = "SELECT a.* " +
             "FROM artwork a " +
-            "WHERE visible = TRUE"+
-            "ORDER BY a.artwork_id DESC",
+            "WHERE visible = TRUE "+
+            "ORDER BY a.artwork_id DESC ",
             nativeQuery = true)
     List<ArtworkEntity> findAllByOrderByArtworkIdDesc();
     @Query(value = "SELECT a.* " +
@@ -85,9 +83,9 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
      */
     @Query(value = "SELECT a.* " +
             "FROM artwork a " +
-            "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
+            "LEFT JOIN wish_list w ON a.artwork_id = w.artwork_id " +
             "WHERE visible = TRUE " +
-            "GROUP BY w.artwork_id " +
+            "GROUP BY a.artwork_id " +
             "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC",
             nativeQuery = true)
     List<ArtworkEntity> findArtworkByWishList();
@@ -98,9 +96,9 @@ public interface ArtworkRepository extends JpaRepository<ArtworkEntity, Integer>
      */
     @Query(value = "SELECT a.* " +
             "FROM artwork a " +
-            "JOIN wish_list w ON a.artwork_id = w.artwork_id " +
+            "LEFT JOIN wish_list w ON a.artwork_id = w.artwork_id " +
             "WHERE a.create_time >= DATE_ADD(CURDATE(), INTERVAL -1 MONTH) AND visible = TRUE " +
-            "GROUP BY w.artwork_id " +
+            "GROUP BY a.artwork_id " +
             "ORDER BY COUNT(w.artwork_id) DESC, a.artwork_id DESC LIMIT 10",
             nativeQuery = true)
     List<ArtworkEntity> findArtworkHome();

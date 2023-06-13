@@ -174,8 +174,8 @@ public class PoaController {
     })
     @ResponseBody
     @PostMapping(value = "/saveFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public FileDto saveFile(@RequestPart List<MultipartFile> imgFile){
-        return fileService.saveFiles(imgFile);
+    public FileDto saveFile(@RequestPart MultipartFile imgFile) {
+        return fileService.s3Upload(imgFile);
     }
 
     /**

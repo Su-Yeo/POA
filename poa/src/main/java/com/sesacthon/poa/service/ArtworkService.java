@@ -34,6 +34,7 @@ public class ArtworkService {
     public ArtworkDto findArtwork(Integer artwork_id){
         return artworkMapper.toDto(artworkRepository.findById(artwork_id).orElse(null));
     }
+
     /**
      * 최신의 아트의 정보리스트 전달
      * @return List<ArtworkDto>

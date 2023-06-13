@@ -1,5 +1,6 @@
 package com.sesacthon.poa.service;
 
+import com.sesacthon.poa.common.S3Uploader;
 import com.sesacthon.poa.domain.FileEntity;
 import com.sesacthon.poa.dto.FileDto;
 import com.sesacthon.poa.dto.mapper.FileMapper;
@@ -21,6 +22,7 @@ import java.util.List;
 public class FileService {
     private final FileRepository fileRepository; // JPA
     private final FileMapper fileMapper; // DTO로 변환
+    private final S3Uploader s3Uploader;
 
     /**
      * file_id로 파일 조회
@@ -69,13 +71,14 @@ public class FileService {
      * @return
      */
     public FileDto saveFile(MultipartFile imgFile) {
-        if(!fileUpload(imgFile)) return null;
-        FileDto fileDto = new FileDto();
-        fileDto.setFile_name(imgFile.getOriginalFilename());
-        fileDto.setFile_url("api/img/"+imgFile.getOriginalFilename());
-        fileDto.setFile_path("C:\\img/"+imgFile.getOriginalFilename());
-        FileEntity fileEntity = fileMapper.toEntity(fileDto);
-        return fileMapper.toDto(fileRepository.save(fileEntity));
+//        if(!fileUpload(imgFile)) return null;
+//        FileDto fileDto = new FileDto();
+//        fileDto.setFile_name(imgFile.getOriginalFilename());
+//        fileDto.setFile_url("api/img/"+imgFile.getOriginalFilename());
+//        fileDto.setFile_path("C:\\img/"+imgFile.getOriginalFilename());
+//        FileEntity fileEntity = fileMapper.toEntity(fileDto);
+//        return fileMapper.toDto(fileRepository.save(fileEntity));
+        return s3Upload(imgFile);
     }
 
     /**
@@ -91,5 +94,23 @@ public class FileService {
             return false;
         }
         return true;
+    }
+
+    public FileDto s3Upload(MultipartFile imgFile) {
+        String storedFileName = null;
+        if(!imgFile.isEmpty()) {
+            try {
+                storedFileName = s3Uploader.upload(imgFile,"images");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        FileDto fileDto = new FileDto();
+        fileDto.setFile_name(imgFile.getOriginalFilename());
+        fileDto.setFile_url(storedFileName);
+        fileDto.setFile_path("images/"+imgFile.getOriginalFilename());
+        FileEntity fileEntity = fileMapper.toEntity(fileDto);
+        return fileMapper.toDto(fileRepository.save(fileEntity));
     }
 }

@@ -31,7 +31,9 @@ public class ArtworkDto { // 작품 Dto
 
     private int visible; // true: 공개허용 / false: 비허용
 
+    private boolean like; // 좋아요 클릭 여부
+
 //    private Integer buy_state; // 1: 결재완료 / 0: 결재취소
 
-    private Integer like_cnt; // 좋아요 갯수
+//    private Integer like_cnt; // 좋아요 갯수
 }

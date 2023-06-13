@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "WishList")
+@Table(name = "wish_list")
 public class WishlistEntity extends BaseTimeEntity { // 좋아요 테이블
     @Id
     @Column(nullable = false)

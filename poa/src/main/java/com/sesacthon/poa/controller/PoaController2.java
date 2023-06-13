@@ -36,8 +36,9 @@ public class PoaController2 {
      * @param artworkDto
      * @return ArtworkDto
      */
-    @Tag(name = "addArtwork", description = "작품 등록")
-    @Operation(summary = "작품 저장", description = "작품 저장."
+//    @Tag(name = "addArtwork", description = "작품 등록")
+    @Tag(name = "Artwork", description = "작품")
+    @Operation(summary = "작품 등록", description = "작품 저장."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
@@ -60,15 +61,39 @@ public class PoaController2 {
      * @return ArtworkDto
      */
     @Tag(name = "Artwork", description = "작품")
-    @Operation(summary = "작품 조회", description = "작품1개의 정보."
+    @Operation(summary = "작품 조회", description = "작품 1개의 정보 조회"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
     })
     @ResponseBody
     @GetMapping("/artwork/{artwork_id}")
-    public ArtworkDto findArtwork(@PathVariable Integer artwork_id) {
+    public ArtworkDto findArtwork(@Schema(description = "작품id")@PathVariable Integer artwork_id) {
         ArtworkDto artworkDto = artworkService.findArtwork(artwork_id);
+        return artworkDto;
+    }
+
+    /**
+     * 로그인한 유저가 조회한 1개의 작품 정보 전달
+     * @param artwork_id
+     * @param user_id
+     * @return
+     */
+    @Tag(name = "Artwork", description = "작품")
+    @Operation(summary = "로그인 유저의 작품 조회", description = "로그인한 유저가 조회한 작품 1개의 정보 조회"
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ArtworkDto.class), mediaType = "application/json"))
+    })
+    @ResponseBody
+    @GetMapping("/artwork/{artwork_id}/{user_id}")
+    public ArtworkDto findUserArtwork(@Schema(description = "작품id")@PathVariable Integer artwork_id, @Schema(description = "로그인 유저id")@PathVariable(required = false) Integer user_id) {
+        ArtworkDto artworkDto = artworkService.findArtwork(artwork_id);
+        if(null == user_id || user_id == 0)
+            artworkDto.setLike(false);
+        else
+            artworkDto.setLike(wishlistService.findArtworkLike(artwork_id, user_id));
+
         return artworkDto;
     }
 
@@ -77,7 +102,8 @@ public class PoaController2 {
      * 여러개의 아트의 정보 최신순 전달
      * @List<ArtworkDto>
      */
-    @Tag(name = "LastArtworkList", description = "최신작품리스트")
+//    @Tag(name = "LastArtworkList", description = "최신작품리스트")
+    @Tag(name = "Artwork", description = "작품")
     @Operation(summary = "최신 작품 리스트 조회", description = "최신 작품 여러개의 정보."
     )
     @ApiResponses({
@@ -129,7 +155,8 @@ public class PoaController2 {
      * 여러개의 아트의 정보 구매가능 및 최신순 전달
      * @List<ArtworkDto>
      */
-    @Tag(name = "BuyingArtworkList", description = "구매가능최신작품리스트")
+//    @Tag(name = "BuyingArtworkList", description = "구매가능최신작품리스트")
+    @Tag(name = "Artwork", description = "작품")
     @Operation(summary = "구매가능 최신 작품 리스트 조회", description = "구매가능 최신 작품 여러개의 정보."
     )
     @ApiResponses({
@@ -167,16 +194,17 @@ public class PoaController2 {
 
     /**
      * 좋아요 취소
-     * @param wishlist_id
+     * @param artwork_id
+     * @param user_id
      */
     @Tag(name = "Wishlist", description = "좋아요")
     @Operation(summary = "1명의 유저가 1개의 작품에 좋아요 취소", description = "좋아요id 필요."
     )
     @ResponseBody
-    @GetMapping("deleteWishlist/{wishlist_id}")
-    public void deleteWishlist(@PathVariable Integer wishlist_id)
+    @GetMapping("/deleteWishlist/{artwork_id}/{user_id}")
+    public void deleteWishlist(@Schema(description = "작품id")@PathVariable Integer artwork_id, @Schema(description = "로그인 유저id")@PathVariable Integer user_id)
     {
-        wishlistService.deleteWishlist(wishlist_id);
+        wishlistService.deleteWishlist(artwork_id, user_id);
     }
 
     /**
