@@ -17,6 +17,8 @@ public class WishlistService {
     private final WishlistMapper wishlistMapper; // DTO로 변환
 
     public WishlistDto saveWishlist(WishlistDto wishlistDto) {
+        int i = wishlistRepository.findByArtWorkIdAndUserId(wishlistDto.getArtwork_id(), wishlistDto.getUser_id());
+        if(i>0) return wishlistDto;
         WishlistEntity wishlistEntity = wishlistMapper.toEntity(wishlistDto);
         return wishlistMapper.toDto(wishlistRepository.save(wishlistEntity));
     }
