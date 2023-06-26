@@ -82,6 +82,10 @@
 ![POA Design](./poa/images/poa_design.png)
 <br/><br/>
 
+### 3) 기술 스택
+![POA DevOps](./poa/images/devOps.png)
+<br/><br/>
+
 ## 6. 우리의 서비스 개발 원칙
 1. **MVP 개발 단계**
  - 회원가입 & 로그인
